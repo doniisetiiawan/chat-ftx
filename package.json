@@ -1,0 +1,14 @@
+{
+  "name": "chat-ftx",
+  "description": "Build a real time chat application with Node.js and Socket.io",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "Doni Setiawan <donisetiawan.050@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "prettier": "1.19.1"
+  }
+}
