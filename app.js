@@ -51,8 +51,46 @@ app.use((err, req, res) => {
 });
 
 app.set('port', process.env.PORT || 3000);
-app.listen(app.get('port'), () => {
+const server = app.listen(app.get('port'), () => {
   console.log(
     `Express server listening on port ${app.get('port')}`,
   );
+});
+
+// eslint-disable-next-line import/order
+const io = require('socket.io').listen(server);
+
+const userList = [];
+const connections = [];
+
+io.sockets.on('connection', (socket) => {
+  connections.push(socket);
+  console.log('Connected:', connections.length);
+
+  function updateUsernames() {
+    io.sockets.emit('get userList', userList);
+  }
+
+  socket.on('disconnect', () => {
+    if (socket.username) {
+      userList.splice(userList.indexOf(socket.username), 1);
+      updateUsernames();
+    }
+    connections.splice(connections.indexOf(socket), 1);
+    console.log('Disconnected:', connections.length);
+  });
+
+  socket.on('send message', (data) => {
+    io.sockets.emit('new message', {
+      msg: data,
+      user: socket.username,
+    });
+  });
+
+  socket.on('new user', (data, callback) => {
+    callback(!!data);
+    socket.username = data;
+    userList.push(socket.username);
+    updateUsernames();
+  });
 });

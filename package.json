@@ -16,9 +16,10 @@
     "prettier": "1.19.1"
   },
   "dependencies": {
+    "body-parser": "latest",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "morgan": "^1.9.1",
-    "body-parser": "latest"
+    "socket.io": "^2.3.0"
   }
 }
